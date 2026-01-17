@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h4>ნივთის დამატება ➕</h4>
+                </div>
+                <div class="card-body">
+
+                    <form method="POST" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+
+                        <div class="form-group">
+                            {{ form.title.label }}
+                            {{ form.title(class="form-control") }}
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.category.label }}
+                                {{ form.category(class="form-control") }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.price.label }}
+                                {{ form.price(class="form-control") }}
+                            </div>
+                        </div>
+
+                        <div class="form-group border p-3 rounded bg-light">
+                            <label class="font-weight-bold text-dark"> სურათის ატვირთვა (სავალდებულოა)</label>
+                            <br>
+                            {{ form.image(class="form-control-file") }}
+
+                            {% if form.image.errors %}
+                                <div class="text-danger mt-2 small font-weight-bold">
+                                    {% for error in form.image.errors %}
+                                        <span> {{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.description.label }}
+                            {{ form.description(class="form-control", rows="4") }}
+                        </div>
+
+                        {{ form.submit(class="btn btn-success btn-block") }}
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

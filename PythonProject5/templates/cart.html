@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">შენი კალათა 🛒</h2>
+
+    <div class="row">
+        <div class="col-md-8">
+            {% if products %}
+                <div class="card shadow-sm">
+                    <ul class="list-group list-group-flush">
+                        {% for product in products %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <img src="{{ url_for('static', filename='uploads/' + product.image) }}"
+                                     alt="{{ product.title }}"
+                                     style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; margin-right: 15px;">
+
+                                <div>
+                                    <h5 class="mb-0">{{ product.title }}</h5>
+                                    <small class="text-muted">{{ product.category }}</small>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center">
+                                <span class="font-weight-bold mr-3">{{ product.price }} ₾</span>
+
+                                <a href="{{ url_for('remove_from_cart', product_id=product.id) }}" class="text-danger" title="წაშლა">
+
+                                </a>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% else %}
+                <div class="alert alert-warning text-center">
+                    კალათა ცარიელია!  <br>
+                    <a href="{{ url_for('home') }}" class="mt-2 btn btn-sm btn-outline-dark">საყიდლებზე წასვლა</a>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow p-3 bg-light">
+                <h4 class="text-center">ჯამი</h4>
+                <hr>
+                <div class="d-flex justify-content-between mb-3">
+                    <span>რაოდენობა:</span>
+                    <strong>{{ products|length }} ნივთი</strong>
+                </div>
+                <div class="d-flex justify-content-between mb-4">
+                    <span class="h5">სულ გადასახდელი:</span>
+                    <span class="h5 text-success">{{ total }} ₾</span>
+                </div>
+
+                <button class="btn btn-success btn-block btn-lg">ყიდვა (Checkout) </button>
+
+                {% if products %}
+                <a href="{{ url_for('clear_cart') }}" class="btn btn-outline-danger btn-block mt-2 btn-sm">
+                    კალათის გასუფთავება
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

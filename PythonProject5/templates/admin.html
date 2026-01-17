@@ -1,0 +1,39 @@
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4 text-warning">ადმინ პანელი </h2>
+
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm border-warning h-100">
+
+                <img src="{{ url_for('static', filename='uploads/' + product.image) }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.title }}</h5>
+                    <p class="text-muted">ფასი: {{ product.price }} ₾</p>
+                    <p class="small">მომხმარებელი: <strong>{{ product.owner.username }}</strong></p>
+                    <hr>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('approve', product_id=product.id) }}" class="btn btn-success flex-grow-1 mr-1">
+                            დასტურ
+                        </a>
+
+                        <a href="{{ url_for('reject', product_id=product.id) }}" class="btn btn-outline-danger flex-grow-1 ml-1">
+                            უარყოფა
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% else %}
+            <div class="col-12 text-center mt-5">
+                <h4>დასადასტურებელი არაფერია! </h4>
+                <a href="{{ url_for('home') }}" class="btn btn-link">მთავარ გვერდზე დაბრუნება</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
